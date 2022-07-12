@@ -38,6 +38,7 @@ class NodeArray:
             node.display()
     def __init__(self,t):
         self.nodes=[]
+        self.name=t.name
         self.buildArray(t)
 
     def resolution(self):
@@ -93,7 +94,8 @@ class NodeArray:
                 if direction == 'U':
                     y -= 1*step
         # open the file in the write mode
-        f = open(str(op('vars')[0,0]), 'w')
+        #f = open(str(op('vars')[0,0]), 'w')
+        f = open(self.name+'.csv', 'w')
 
         # create the csv writer
         patch = csv.writer(f)
@@ -105,14 +107,12 @@ class NodeArray:
 
         # close the file
         f.close()
-        canvas.save(r'festoons.png')
+        canvas.save(self.name+'.png')
 
 
 def onTableChange(dat):
     array=None
-    array=NodeArray(op('nodes'))
-    print(op('nodes')[2,1])
+    array=NodeArray(dat)
     array.updateTable()
-    array.display()
     op('image').par.reload.pulse()
     return
